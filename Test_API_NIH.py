@@ -1,52 +1,54 @@
-# import requests
-# import json
-
-# url = "https://api.reporter.nih.gov/v2/publications/search"
-# payload = {
-#     "criteria": {
-#         "pmids": [25058045]
-#     },
-#     "offset": 0,
-#     "limit": 10,
-#     "sort_field": "core_project_num",
-#     "sort_order": "asc"
-# }
-# response = requests.post(url, json=payload)
-# print(response.json())
-
+import csv
+import os
 import requests
 import json
+from urllib.parse import urlparse
 
-pmcID = "PMC4136787"
-url = f"https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_json/{pmcID}/unicode"
+# configuration
+INPUT_CSV = "SB_publication_PMC.csv"   # your input CSV file
+OUTPUT_DIR = "assets/SB_publication_extracted_files"            # folder to save results
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-response = requests.get(url)
-if response.status_code == 200:
-    # try:
-    data = response.json()
-    with open("bioc_output.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+# extrack PMC ID from URL
+def extract_pmc_id(url):
+    """
+    Extracts the PMC ID from the URL.
+    Example URL: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11353732/
+    """
+    try:
+        parts = url.rstrip("/").split("/")  # remove trailing slash and split
+        for part in reversed(parts):
+            if part.startswith("PMC"):
+                return part
+        return None
+    except Exception as e:
+        print(f"Error extracting PMC ID from {url}: {e}")
+        return None
 
-    print("✅ Data saved to bioc_output.json")
+# main loop
+with open(INPUT_CSV, newline='', encoding='utf-8') as csvfile:
+    reader = csv.DictReader(csvfile)
+    for row in reader:
+        title = row.get("Title", "").strip().replace("/", "_").replace("\\", "_")
+        url = row.get("Link", "").strip()  
 
-        # print("Raw JSON:", data)
+        pmc_id = extract_pmc_id(url)
+        if not pmc_id:
+            print(f"⚠️ Skipping: Could not extract PMC ID from URL ({url})")
+            continue
 
-    #     # If data is a list, access the first item directly
-    #     if isinstance(data, list):
-    #         first_doc = data[0]
-    #     elif isinstance(data, dict):
-    #         first_doc = data.get("documents", [{}])[0]
-    #     else:
-    #         print("Unexpected data format.")
-    #         exit()
+        api_url = f"https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_json/{pmc_id}/unicode"
+        print(f"Fetching {pmc_id} ...")
 
-    #     passages = first_doc.get("passages", [])
-    #     for i, passage in enumerate(passages):
-    #         text = passage.get("text", "").strip()
-    #         if text:
-    #             print(f"Passage {i+1}: {text}\n")
-
-    # except Exception as e:
-    #     print("Error parsing JSON:", e)
-else:
-    print("Error:", response.status_code)
+        try:
+            response = requests.get(api_url, timeout=15)
+            if response.status_code == 200:
+                data = response.json()
+                output_path = os.path.join(OUTPUT_DIR, f"{pmc_id}.json")
+                with open(output_path, "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=2, ensure_ascii=False)
+                print(f"Saved: {output_path}")
+            else:
+                print(f"Error {response.status_code} for {pmc_id}")
+        except Exception as e:
+            print(f"Failed to process {pmc_id}: {e}")

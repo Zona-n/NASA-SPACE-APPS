@@ -10,7 +10,7 @@
   :root{
     --bg:#0b2240; --ink:#eaf0f7; --muted:#b8c7dc; --plate:#0f2a50; --stroke:rgba(255,255,255,.10);
     --lego-red:#e11d25; --lego-yellow:#f8c414; --lego-blue:#1e90ff; --lego-green:#31b553;
-    --max:1400px; --radius:16px;
+    --max:1120px; --radius:16px;
   }
   *{box-sizing:border-box}
   html,body{height:100%; margin:0}
@@ -24,11 +24,12 @@
     -webkit-font-smoothing:antialiased;
   }
   .wrap{max-width:var(--max); margin:0 auto; padding:0 28px}
-  .header{position:sticky; top:0; z-index:30; background:rgba(10,22,44,.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--stroke)}
+  .header{position:sticky; top:0; z-index:30; background:rgba(10,22,44,.76); backdrop-filter:blur(8px); border-bottom:1px solid var(--stroke)}
   .row{display:flex; align-items:center; justify-content:space-between; gap:22px; flex-wrap:wrap; padding:18px 0}
   .brand{display:flex; align-items:center; gap:14px}
-  .brand h1{margin:0; font-family:Bungee,Inter; letter-spacing:.6px; font-size:24px}
-  .brand small{display:block; color:var(--muted); letter-spacing:.6px; font-size:11px}
+  .brand img{width:60px; height:60px; object-fit:contain; border-radius:50%; border:2px solid var(--stroke)}
+  .brand h1{margin:0; font-family:Bungee,Inter; letter-spacing:.6px; font-size:24px; white-space:nowrap}
+  .brand small{display:block; color:var(--muted); letter-spacing:.6px}
   .stud-strip{height:20px; border-top:1px solid var(--stroke); border-bottom:1px solid var(--stroke);
     background:
       radial-gradient(circle at 14px 10px, rgba(255,255,255,.2) 32%, rgba(0,0,0,.3) 33%, transparent 34%) 0 0/52px 20px,
@@ -103,9 +104,10 @@
     <div class="wrap">
       <div class="row">
         <div class="brand">
+          <img src="assets/lego-logo.png" alt="Brickonaut badge" />
           <div>
             <h1>Brickonaut</h1>
-            <small>Scientist Dashboard · NASA Space Bioscience Explorer</small>
+            <small>UIC Chicago · NASA Space Apps · Space Bioscience Explorer</small>
           </div>
         </div>
         <nav class="nav">
@@ -118,6 +120,7 @@
     </div>
     <div class="stud-strip"></div>
   </header>
+  
 
   <main class="wrap">
     <section class="hero">
