@@ -4,39 +4,342 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NASA Space Apps Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #FC3D21;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nasa-logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nasa-logo {
+            width: 80px;
+            height: 80px;
+            background: #FC3D21;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 0 20px rgba(252, 61, 33, 0.5);
+        }
+
+        .nasa-logo::before {
+            content: 'NASA';
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .nasa-logo::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 3px;
+            background: white;
+            top: 50%;
+            left: 20%;
+            transform: rotate(-15deg);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 3px;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: #a0aec0;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 5px;
+        }
+
+        nav a {
+            color: #cbd5e0;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: rgba(252, 61, 33, 0.2);
+            color: #ffffff;
+        }
+
+        nav a.active {
+            background: #FC3D21;
+            color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, #ffffff, #a0aec0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #cbd5e0;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #FC3D21;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(252, 61, 33, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(252, 61, 33, 0.6);
+        }
+
+        /* Dashboard Area */
+        .dashboard-area {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 40px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #ffffff;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            border-color: #FC3D21;
+            box-shadow: 0 10px 30px rgba(252, 61, 33, 0.3);
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .card-description {
+            color: #cbd5e0;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* Content Placeholder */
+        .content-placeholder {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px dashed rgba(252, 61, 33, 0.5);
+            border-radius: 20px;
+            padding: 80px 40px;
+            text-align: center;
+            margin: 40px auto;
+            max-width: 1200px;
+        }
+
+        .content-placeholder h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #FC3D21;
+        }
+
+        .content-placeholder p {
+            color: #cbd5e0;
+            font-size: 16px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 2px solid #FC3D21;
+            margin-top: 80px;
+        }
+
+        .footer-logo {
+            font-size: 11px;
+            color: #718096;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: #a0aec0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-text h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <h1>🚀 NASA</h1>
-                <p>Mission Control</p>
+    <!-- Header -->
+    <header class="header">
+        <div class="nasa-logo-section">
+            <div class="nasa-logo"></div>
+            <div class="logo-text">
+                <h1>NASA</h1>
+                <p>NATIONAL AERONAUTICS AND SPACE ADMINISTRATION</p>
             </div>
-            <nav>
-                <a href="#" class="active">Dashboard</a>
-                <a href="#">Missions</a>
-                <a href="#">Data</a>
-                <a href="#">Settings</a>
-            </nav>
-        </header>
+        </div>
+        <nav>
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Missions</a>
+            <a href="#">Data</a>
+            <a href="#">About</a>
+        </nav>
+    </header>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <h2>Welcome to NASA Mission Control</h2>
-            <p>Your dashboard is ready to build!</p>
-            
-            <!-- Add your dashboard content here -->
-            <div class="placeholder">
-                <p>Start building your dashboard here...</p>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Mission Control Dashboard</h2>
+        <p>Real-time monitoring and analytics for space exploration missions. Track satellites, analyze data, and explore the cosmos.</p>
+        <a href="#dashboard" class="cta-button">Launch Dashboard</a>
+    </section>
+
+    <!-- Dashboard Area -->
+    <section class="dashboard-area" id="dashboard">
+        <h3 class="section-title">Quick Stats</h3>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="card-icon">🚀</div>
+                <h4 class="card-title">Active Missions</h4>
+                <p class="card-description">Monitor ongoing space missions and track their progress in real-time.</p>
             </div>
-        </main>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>NATIONAL AERONAUTICS AND SPACE ADMINISTRATION</p>
-        </footer>
-    </div>
+            <div class="dashboard-card">
+                <div class="card-icon">🛰️</div>
+                <h4 class="card-title">Satellites</h4>
+                <p class="card-description">Track satellite positions, telemetry data, and operational status.</p>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">📊</div>
+                <h4 class="card-title">Data Analytics</h4>
+                <p class="card-description">Analyze mission data, generate reports, and visualize trends.</p>
+            </div>
+        </div>
+
+        <!-- Content Placeholder -->
+        <div class="content-placeholder">
+            <h3>🌟 Build Your Dashboard Here</h3>
+            <p>This is your workspace. Add charts, graphs, mission details, and interactive components to create your custom NASA dashboard.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">NATIONAL AERONAUTICS AND SPACE ADMINISTRATION</div>
+        <div class="footer-text">Space Apps Challenge 2024 | Mission Control Dashboard v1.0</div>
+    </footer>
 </body>
 </html>
