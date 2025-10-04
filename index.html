@@ -1,494 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NASA Space Bioscience Explorer</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Le’Go · NASA Space Bioscience Explorer</title>
 
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
-            color: #ffffff;
-            min-height: 100vh;
-        }
+<!-- Fonts (blocky headline + clean body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bungee:wght@400&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-        .header {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 15px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid #FC3D21;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+<!-- Charts + Mini KG (no build tools needed) -->
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script defer src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
 
-        .nasa-logo-section {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
+<style>
+:root{
+  /* NASA + LEGO palette pulled from your badge */
+  --navy:#0b2240;            /* deep night */
+  --midnight:#0d1a33;
+  --lego-red:#e11d25;
+  --lego-yellow:#f8c414;
+  --lego-blue:#1e90ff;
+  --lego-green:#31b553;
+  --accent:#fc3d21;          /* NASA meatball red */
+  --cloud:#cbd5e0;
+  --white:#fff;
+}
 
-        .nasa-logo {
-            width: 80px;
-            height: 80px;
-            background: #FC3D21;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: 0 0 20px rgba(252, 61, 33, 0.5);
-        }
+/* Global */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,Helvetica,sans-serif;
+  color:var(--white);
+  background:
+     radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,.5) 20%, transparent 21%) 0 0/120px 120px,
+     radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,.35) 20%, transparent 21%) 0 0/90px 90px,
+     linear-gradient(180deg, var(--navy) 0%, var(--midnight) 60%, #000 100%);
+}
 
-        .nasa-logo::before {
-            content: 'NASA';
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-            letter-spacing: 2px;
-        }
+/* Header */
+.header{
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 22px; border-bottom:3px solid var(--lego-yellow);
+  background:rgba(10,20,40,.75); backdrop-filter:blur(8px);
+}
+.brand{display:flex; align-items:center; gap:14px}
+.brand img{height:64px; width:64px; object-fit:contain; border-radius:50%; box-shadow:0 0 0 4px #13294b, 0 0 0 6px var(--lego-yellow)}
+.brand h1{font-family:Bungee,Inter,system-ui; letter-spacing:.5px; margin:0; font-size:22px}
+.brand small{display:block; font-size:11px; color:var(--cloud); letter-spacing:.8px}
 
-        .nasa-logo::after {
-            content: '';
-            position: absolute;
-            width: 60%;
-            height: 3px;
-            background: white;
-            top: 50%;
-            left: 20%;
-            transform: rotate(-15deg);
-        }
+.nav{
+  display:flex; gap:8px; flex-wrap:wrap;
+}
+.nav a{
+  --bg: var(--lego-blue);
+  text-decoration:none; color:var(--white); font-weight:700; letter-spacing:.6px;
+  padding:9px 14px; border-radius:8px; position:relative;
+  background:var(--bg);
+  box-shadow:
+     0 4px 0 #0a3f7a,
+     inset 0 10px 0 rgba(255,255,255,.08),
+     inset 0 -6px 0 rgba(0,0,0,.25);
+}
+.nav a[data-color="red"]{--bg:var(--lego-red); box-shadow:0 4px 0 #7a0a0e, inset 0 10px 0 rgba(255,255,255,.08), inset 0 -6px 0 rgba(0,0,0,.25)}
+.nav a[data-color="yellow"]{--bg:var(--lego-yellow); color:#1b1200; box-shadow:0 4px 0 #805b00, inset 0 10px 0 rgba(255,255,255,.25), inset 0 -6px 0 rgba(0,0,0,.25)}
+.nav a[data-color="green"]{--bg:var(--lego-green); box-shadow:0 4px 0 #1d6d33, inset 0 10px 0 rgba(255,255,255,.08), inset 0 -6px 0 rgba(0,0,0,.25)}
+.nav a:hover{transform:translateY(-1px)}
+.nav a:active{transform:translateY(2px)}
 
-        .logo-text {
-            display: flex;
-            flex-direction: column;
-        }
+.hero{
+  padding:56px 22px 28px;
+  text-align:center;
+}
+.hero h2{
+  margin:8px 0 10px;
+  font-size:40px; letter-spacing:1px; font-weight:900;
+  background:linear-gradient(90deg, #fff, #a9c1ff 35%, #f8c414 70%, #fff);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.hero p{max-width:860px; margin:0 auto; color:var(--cloud)}
 
-        .logo-text h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: 3px;
-        }
+/* Brick panels */
+.section{
+  max-width:1200px; margin:28px auto; padding:0 20px;
+}
+.brick{
+  position:relative; border-radius:18px; padding:18px;
+  margin:18px 0 24px; overflow:hidden;
+  background:
+     radial-gradient(circle at 14px 14px, rgba(255,255,255,.25) 18%, rgba(0,0,0,.15) 19%, rgba(0,0,0,.25) 20%, transparent 21%) 0 0/56px 56px,
+     radial-gradient(circle at 42px 14px, rgba(255,255,255,.25) 18%, rgba(0,0,0,.15) 19%, rgba(0,0,0,.25) 20%, transparent 21%) 0 0/56px 56px,
+     linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.2));
+  box-shadow:0 20px 50px rgba(0,0,0,.45), inset 0 2px 0 rgba(255,255,255,.08);
+  border:3px solid rgba(255,255,255,.08);
+}
+.brick[data-color="red"]{background-color:#b6171d}
+.brick[data-color="blue"]{background-color:#0f56b3}
+.brick[data-color="yellow"]{background-color:#d9a50a}
+.brick[data-color="green"]{background-color:#1f8c43}
 
-        .logo-text p {
-            font-size: 11px;
-            color: #a0aec0;
-            letter-spacing: 1px;
-            margin-top: 2px;
-        }
+.section h3{
+  font-family:Bungee,Inter,system-ui; letter-spacing:1px; margin:0 0 10px 4px; font-size:22px
+}
+.sub{color:#e2e8f0; margin:2px 0 14px 4px; font-size:14px}
 
-        nav {
-            display: flex;
-            gap: 5px;
-        }
+/* Grid helpers */
+.grid{display:grid; gap:14px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:980px){
+  .grid-2,.grid-3{grid-template-columns:1fr}
+}
 
-        nav a {
-            color: #cbd5e0;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: all 0.3s;
-            font-size: 14px;
-            font-weight: 500;
-        }
+/* Cards */
+.card{
+  border-radius:14px; padding:14px; background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.12);
+}
+.card h4{margin:.2rem 0 .4rem; font-size:18px}
+.card p{margin:0; color:#d8e0ea; font-size:14px}
+.meta{font-size:12px; color:#b7c1d1}
 
-        nav a:hover {
-            background: rgba(252, 61, 33, 0.2);
-            color: #ffffff;
-        }
+/* Buttons */
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  font-weight:800; letter-spacing:.4px; text-transform:uppercase;
+  background:var(--lego-yellow); color:#1b1200; border:none;
+  padding:10px 14px; border-radius:10px; cursor:pointer;
+  box-shadow:0 4px 0 #805b00, inset 0 10px 0 rgba(255,255,255,.25), inset 0 -6px 0 rgba(0,0,0,.25);
+}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(2px)}
 
-        nav a.active {
-            background: #FC3D21;
-            color: #ffffff;
-        }
+/* Inputs */
+.input{
+  width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.2);
+  background:rgba(9,18,35,.7); color:#fff; font-size:15px; outline:none;
+}
+.kpill{display:inline-block; padding:5px 8px; border-radius:999px; font-size:12px; background:rgba(255,255,255,.1); margin-right:6px}
 
-        .hero {
-            text-align: center;
-            padding: 60px 20px 40px;
-            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
-        }
-
-        .hero h2 {
-            font-size: 48px;
-            margin-bottom: 15px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            background: linear-gradient(90deg, #ffffff, #a0aec0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 18px;
-            color: #cbd5e0;
-            max-width: 700px;
-            margin: 0 auto 20px;
-            line-height: 1.6;
-        }
-
-        .hero .subtitle {
-            font-size: 14px;
-            color: #a0aec0;
-            margin-bottom: 10px;
-        }
-
-        .selection-area {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 40px;
-        }
-
-        .section-title {
-            font-size: 36px;
-            margin-bottom: 20px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #ffffff;
-        }
-
-        .section-subtitle {
-            font-size: 16px;
-            color: #cbd5e0;
-            text-align: center;
-            margin-bottom: 50px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .persona-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        .persona-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            transition: all 0.4s;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .persona-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #FC3D21, #ff6b4a);
-            transform: scaleX(0);
-            transition: transform 0.4s;
-        }
-
-        .persona-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .persona-card:hover {
-            transform: translateY(-10px);
-            border-color: #FC3D21;
-            box-shadow: 0 20px 50px rgba(252, 61, 33, 0.4);
-            background: rgba(252, 61, 33, 0.1);
-        }
-
-        .persona-icon {
-            font-size: 72px;
-            margin-bottom: 25px;
-            display: block;
-            text-align: center;
-        }
-
-        .persona-title {
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: #ffffff;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        .persona-description {
-            color: #cbd5e0;
-            line-height: 1.7;
-            font-size: 15px;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .persona-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .persona-features li {
-            color: #a0aec0;
-            font-size: 14px;
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .persona-features li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: #FC3D21;
-            font-weight: bold;
-        }
-
-        .persona-button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #FC3D21, #ff4520);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .persona-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(252, 61, 33, 0.5);
-        }
-
-        .info-section {
-            max-width: 1200px;
-            margin: 80px auto 40px;
-            padding: 0 40px;
-            text-align: center;
-        }
-
-        .info-section h3 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-
-        .info-section p {
-            color: #cbd5e0;
-            line-height: 1.8;
-            font-size: 16px;
-            max-width: 800px;
-            margin: 0 auto 30px;
-        }
-
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 60px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: bold;
-            color: #FC3D21;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: #a0aec0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .footer {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 30px 40px;
-            text-align: center;
-            border-top: 2px solid #FC3D21;
-            margin-top: 80px;
-        }
-
-        .footer-logo {
-            font-size: 11px;
-            color: #718096;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        .footer-text {
-            font-size: 13px;
-            color: #a0aec0;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                gap: 20px;
-                padding: 20px;
-            }
-
-            .hero h2 {
-                font-size: 32px;
-            }
-
-            .persona-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .logo-text h1 {
-                font-size: 22px;
-            }
-
-            .stats-bar {
-                gap: 30px;
-            }
-        }
-    </style>
+/* Consensus meter */
+.meter{height:14px; background:rgba(255,255,255,.15); border-radius:10px; overflow:hidden}
+.meter > span{display:block; height:100%; background:linear-gradient(90deg, #ff5f6d, #f8c414, #31b553)}
+/* Footer */
+.footer{padding:40px 20px; text-align:center; color:var(--cloud)}
+.footer small{display:block; opacity:.8}
+</style>
 </head>
 <body>
-    <header class="header">
-        <div class="nasa-logo-section">
-            <div class="nasa-logo"></div>
-            <div class="logo-text">
-                <h1>NASA</h1>
-                <p>BIOLOGICAL & PHYSICAL SCIENCES</p>
-            </div>
+
+<header class="header">
+  <div class="brand">
+    <img src="assets/lego-logo.png" alt="Le’Go badge" />
+    <div>
+      <h1>Le’Go · NASA Space Bioscience Explorer</h1>
+      <small>UIC Chicago · NASA Space Apps</small>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="#search" data-color="yellow">Search</a>
+    <a href="#consensus" data-color="red">Consensus</a>
+    <a href="#trends" data-color="blue">Trends</a>
+    <a href="#kg" data-color="green">Knowledge Graph</a>
+    <a href="#gaps" data-color="yellow">Gap Map</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Build a Space Biology Knowledge Engine</h2>
+  <p>Explore NASA bioscience publications with **AI under the hood**—no chatbot. Brick-by-brick we surface structured facts, consensus across studies, trends over time, and a browsable knowledge graph.</p>
+</section>
+
+<main class="section">
+
+  <!-- SEARCH (semantic search + evidence cards) -->
+  <section id="search" class="brick" data-color="blue">
+    <h3>Semantic Search</h3>
+    <p class="sub">Type concepts like “microgravity bone density mouse” or “plant root growth ISS”. This demo searches a tiny local sample; wire it to your embeddings API later.</p>
+    <div class="grid grid-2">
+      <div class="card">
+        <input id="q" class="input" placeholder="Search studies, endpoints, organisms…" />
+        <div style="margin-top:10px">
+          <span class="kpill">AI: embeddings</span>
+          <span class="kpill">Section-aware summaries</span>
+          <span class="kpill">Evidence spans</span>
         </div>
-        <nav>
-            <a href="#" class="active">Home</a>
-            <a href="#">About</a>
-            <a href="#">Resources</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
+        <div style="margin-top:12px"><button class="btn" id="btnSearch">Search</button></div>
+      </div>
+      <div class="card" id="results">
+        <h4>Results</h4>
+        <p class="meta">0 matches</p>
+        <div id="cards"></div>
+      </div>
+    </div>
+  </section>
 
-    <section class="hero">
-        <p class="subtitle">Space Bioscience Research Explorer</p>
-        <h2>Who Are You?</h2>
-        <p>Access NASA's comprehensive bioscience research database tailored to your needs. Choose your role below to explore mission-critical insights powered by AI.</p>
-    </section>
+  <!-- CONSENSUS -->
+  <section id="consensus" class="brick" data-color="red">
+    <h3>Consensus Meter</h3>
+    <p class="sub">Aggregates effect directions across papers (entailment / voting). Example: “Microgravity → bone density (mouse)”.</p>
+    <div class="card">
+      <h4>Microgravity decreases bone density in mouse</h4>
+      <div class="meter" style="margin:8px 0 6px"><span id="meterBar" style="width:72%"></span></div>
+      <p class="meta"><strong id="meterPct">72%</strong> agreement across 18 relevant studies · <a href="#search">view evidence</a></p>
+    </div>
+  </section>
 
-    <section class="selection-area">
-        <h3 class="section-title">Select Your Dashboard</h3>
-        <p class="section-subtitle">Each dashboard is customized to provide relevant insights and tools for your specific research or mission needs.</p>
-        
-        <div class="persona-grid">
-            <div class="persona-card" onclick="navigateToDashboard('scientist')">
-                <span class="persona-icon">🔬</span>
-                <h4 class="persona-title">Scientist / Researcher</h4>
-                <p class="persona-description">Discover breakthrough research, identify knowledge gaps, and generate new hypotheses from 608+ NASA bioscience publications.</p>
-                <ul class="persona-features">
-                    <li>AI-powered research discovery</li>
-                    <li>Knowledge graph visualization</li>
-                    <li>Smart publication search</li>
-                    <li>Research gap analysis</li>
-                    <li>Citation network explorer</li>
-                </ul>
-                <button class="persona-button">Launch Research Dashboard</button>
-            </div>
+  <!-- TRENDS -->
+  <section id="trends" class="brick" data-color="yellow">
+    <h3>Trends Over Time</h3>
+    <p class="sub">Topic & organism counts by year (post-extraction). Replace the demo data with your processed “facts” table.</p>
+    <div class="card">
+      <canvas id="trendChart" height="120"></canvas>
+    </div>
+  </section>
 
-            <div class="persona-card" onclick="navigateToDashboard('manager')">
-                <span class="persona-icon">💼</span>
-                <h4 class="persona-title">Investment Manager</h4>
-                <p class="persona-description">Identify high-impact funding opportunities and track research ROI across NASA's bioscience portfolio.</p>
-                <ul class="persona-features">
-                    <li>Funding opportunity analyzer</li>
-                    <li>Research impact metrics</li>
-                    <li>Grant success patterns</li>
-                    <li>Budget allocation insights</li>
-                    <li>Portfolio performance tracking</li>
-                </ul>
-                <button class="persona-button">Launch Investment Dashboard</button>
-            </div>
+  <!-- KNOWLEDGE GRAPH -->
+  <section id="kg" class="brick" data-color="green">
+    <h3>Knowledge Graph</h3>
+    <p class="sub">Nodes: Organism, Condition, Endpoint, Mission. Click an edge to see evidence cards.</p>
+    <div class="card" style="height:360px" id="cy"></div>
+  </section>
 
-            <div class="persona-card" onclick="navigateToDashboard('architect')">
-                <span class="persona-icon">🚀</span>
-                <h4 class="persona-title">Mission Architect</h4>
-                <p class="persona-description">Access actionable insights for planning safe and efficient lunar and Martian exploration missions.</p>
-                <ul class="persona-features">
-                    <li>Mission-critical findings</li>
-                    <li>Biological risk assessment</li>
-                    <li>Environmental constraints</li>
-                    <li>Life support data analysis</li>
-                    <li>Mission planning insights</li>
-                </ul>
-                <button class="persona-button">Launch Mission Dashboard</button>
-            </div>
-        </div>
-    </section>
+  <!-- GAP MAP -->
+  <section id="gaps" class="brick" data-color="blue">
+    <h3>Gap Map</h3>
+    <p class="sub">Coverage matrix (Organism × Condition × Endpoint). Green = well studied, Yellow = sparse, Red = gaps. Click to open a pre-drafted study outline.</p>
+    <div class="grid grid-3">
+      <div class="card">
+        <h4>Plants × Microgravity × Photosynthesis</h4>
+        <div class="meter"><span style="width:35%; background:linear-gradient(90deg,#ff5f6d,#f8c414)"></span></div>
+        <p class="meta">Sparse coverage · <button class="btn" onclick="proposeStudy('plants','microgravity','photosynthesis')">Propose Study</button></p>
+      </div>
+      <div class="card">
+        <h4>Mouse × Microgravity × Bone Density</h4>
+        <div class="meter"><span style="width:80%"></span></div>
+        <p class="meta">Well covered · <button class="btn" onclick="viewEvidence('mouse','microgravity','bone density')">See Evidence</button></p>
+      </div>
+      <div class="card">
+        <h4>Microbe × Radiation × DNA Repair</h4>
+        <div class="meter"><span style="width:50%; background:linear-gradient(90deg,#ff5f6d,#f8c414)"></span></div>
+        <p class="meta">Partial coverage · <button class="btn" onclick="proposeStudy('microbe','radiation','DNA repair')">Propose Study</button></p>
+      </div>
+    </div>
+  </section>
 
-    <section class="info-section">
-        <h3>Powered by Advanced AI & Data Science</h3>
-        <p>Our platform leverages artificial intelligence, knowledge graphs, and natural language processing to analyze decades of NASA bioscience research. Explore over 600 publications spanning experiments on the International Space Station, shuttle missions, and ground-based analog studies.</p>
-        
-        <div class="stats-bar">
-            <div class="stat-item">
-                <span class="stat-number">608+</span>
-                <span class="stat-label">Publications</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">40+</span>
-                <span class="stat-label">Years of Research</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">AI</span>
-                <span class="stat-label">Powered Insights</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-number">24/7</span>
-                <span class="stat-label">Access</span>
-            </div>
-        </div>
-    </section>
+</main>
 
-    <footer class="footer">
-        <div class="footer-logo">NATIONAL AERONAUTICS AND SPACE ADMINISTRATION</div>
-        <div class="footer-text">Space Apps Challenge 2024 | Bioscience Explorer v1.0</div>
-    </footer>
+<footer class="footer">
+  <div>Made with ❤️, bricks, and science · UIC Chicago · NASA Space Apps 2025</div>
+  <small>Logo & theme inspired by your badge. Replace demo data with your pipeline outputs.</small>
+</footer>
 
-    <script>
-        function navigateToDashboard(type) {
-            // For now, just alert - you'll replace this with actual navigation
-            alert('Navigating to ' + type + ' dashboard...\n\nThis will link to: ' + type + '-dashboard.html');
-            
-            // Later, uncomment this to actually navigate:
-            // window.location.href = type + '-dashboard.html';
-        }
+<script>
+// --- Demo data (replace with your API responses) ---
+const PAPERS = [
+  {
+    id:"PMC3630201",
+    title:"Microgravity induces pelvic bone loss ...",
+    year:2013,
+    organism:"mouse",
+    condition:"microgravity",
+    endpoint:"bone density",
+    direction:"decrease",
+    abstract:"Spaceflight reduces bone density via osteoclastic activity and osteoblastic inhibition...",
+    evidence:"“Bone mineral density decreased by 6–8% after 30 days...” (Results)"
+  },
+  {
+    id:"PMC7998608",
+    title:"Microgravity Reduces the Differentiation ...",
+    year:2021,
+    organism:"embryonic stem cells",
+    condition:"microgravity",
+    endpoint:"differentiation potential",
+    direction:"decrease",
+    abstract:"Modeled microgravity impairs differentiation and regenerative potential in ESCs...",
+    evidence:"“mESCs exhibited reduced lineage-specific markers under mg...” (Results)"
+  },
+  {
+    id:"PMC11988870",
+    title:"Stem Cell Health and Tissue Regeneration in Microgravity",
+    year:2024,
+    organism:"human/animal cells",
+    condition:"microgravity",
+    endpoint:"tissue regeneration",
+    direction:"mixed",
+    abstract:"Review of stem cell health in mg; highlights risks and opportunities...",
+    evidence:"“Evidence remains mixed across platforms; mission duration matters.” (Conclusion)"
+  }
+];
 
-        // Add hover effect animations
-        document.querySelectorAll('.persona-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-    </script>
+function renderCards(list){
+  const cards = document.getElementById('cards');
+  const meta = document.querySelector('#results .meta');
+  cards.innerHTML='';
+  meta.textContent = `${list.length} match${list.length!==1?'es':''}`;
+  list.forEach(p=>{
+    const el = document.createElement('div');
+    el.className='card';
+    el.innerHTML = `
+      <h4>${p.title}</h4>
+      <p class="meta">${p.organism} · ${p.condition} · ${p.endpoint} · ${p.year} · <a target="_blank" href="https://www.ncbi.nlm.nih.gov/pmc/articles/${p.id}/">PMCID ${p.id}</a></p>
+      <p style="margin-top:6px">${p.abstract}</p>
+      <details style="margin-top:8px"><summary>Show evidence span</summary><p style="margin-top:6px">${p.evidence}</p></details>
+    `;
+    cards.appendChild(el);
+  });
+}
+
+document.getElementById('btnSearch').addEventListener('click',()=>{
+  const q = (document.getElementById('q').value||'').toLowerCase();
+  if(!q.trim()) return renderCards([]);
+  const terms = q.split(/\s+/).filter(Boolean);
+  // simple term match demo; swap with embeddings API call
+  const scored = PAPERS.map(p=>{
+    const hay = `${p.title} ${p.organism} ${p.condition} ${p.endpoint} ${p.abstract}`.toLowerCase();
+    const score = terms.reduce((s,t)=> s + (hay.includes(t)?1:0), 0);
+    return [score,p];
+  }).filter(([s])=>s>0).sort((a,b)=>b[0]-a[0]).map(([_,p])=>p);
+  renderCards(scored);
+});
+
+// Seed results
+renderCards([]);
+
+// Consensus %
+const pct = 0.72;
+document.getElementById('meterBar').style.width = (pct*100)+'%';
+document.getElementById('meterPct').textContent = Math.round(pct*100)+'%';
+
+// Trend chart (replace with real counts)
+document.addEventListener('DOMContentLoaded', ()=>{
+  const ctx = document.getElementById('trendChart');
+  if(!window.Chart || !ctx) return;
+  new Chart(ctx, {
+    type:'line',
+    data:{
+      labels:[2012,2014,2016,2018,2020,2022,2024],
+      datasets:[
+        {label:'Bone density (mouse)', data:[1,2,3,4,5,7,8]},
+        {label:'Stem cells', data:[0,1,1,2,3,4,6]},
+        {label:'Plants (photosynthesis)', data:[2,2,3,3,3,4,4]}
+      ]
+    },
+    options:{
+      plugins:{legend:{labels:{color:'#fff'}}},
+      scales:{
+        y:{ticks:{color:'#fff'}, grid:{color:'rgba(255,255,255,.1)'}},
+        x:{ticks:{color:'#fff'}, grid:{color:'rgba(255,255,255,.06)'}}
+      }
+    }
+  });
+});
+
+// Mini Knowledge Graph
+window.addEventListener('load', ()=>{
+  if(!window.cytoscape) return;
+  const cy = cytoscape({
+    container: document.getElementById('cy'),
+    style: [
+      { selector: 'node', style: {
+          'background-color': 'data(color)',
+          'label': 'data(label)',
+          'color': '#fff',
+          'font-weight':'700',
+          'text-outline-color':'#000',
+          'text-outline-width':1
+      }},
+      { selector: 'edge', style: {
+          'width': 3,
+          'line-color': '#f8c414',
+          'target-arrow-color': '#f8c414',
+          'target-arrow-shape': 'triangle',
+          'curve-style':'bezier',
+          'label':'data(label)',
+          'color':'#fff',
+          'font-size':12
+      }}
+    ],
+    elements: {
+      nodes: [
+        { data:{ id:'cond',  label:'Microgravity', color:'#1e90ff'}},
+        { data:{ id:'org',   label:'Mouse',        color:'#31b553'}},
+        { data:{ id:'endp',  label:'Bone Density', color:'#e11d25'}},
+        { data:{ id:'miss',  label:'ISS',          color:'#f8c414'}},
+      ],
+      edges: [
+        { data:{ id:'e1', source:'cond', target:'endp', label:'decreases'}},
+        { data:{ id:'e2', source:'org',  target:'endp', label:'measured in'}},
+        { data:{ id:'e3', source:'miss', target:'cond', label:'exposure platform'}}
+      ]
+    },
+    layout:{ name:'cose', animate:true, fit:true }
+  });
+
+  cy.on('tap','edge', (evt)=>{
+    const e = evt.target.data();
+    alert(`Evidence cards for relation: ${e.label}\n\nHook this to /api/evidence?source=${e.source}&target=${e.target}`);
+  });
+});
+
+// Gap actions
+function proposeStudy(org,cond,endp){
+  alert(`Drafting study outline for:\nOrganism: ${org}\nCondition: ${cond}\nEndpoint: ${endp}\n\nHook to /api/propose-study`);
+}
+function viewEvidence(org,cond,endp){
+  location.hash='#search';
+  document.getElementById('q').value = `${org} ${cond} ${endp}`;
+}
+</script>
 </body>
 </html>
