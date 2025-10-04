@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brickonaut · Space Bioscience Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+  :root{
+    --bg:#0b2240; --ink:#eaf0f7; --muted:#b8c7dc; --plate:#0f2a50; --stroke:rgba(255,255,255,.10);
+    --lego-red:#e11d25; --lego-yellow:#f8c414; --lego-blue:#1e90ff; --lego-green:#31b553;
+    --max:1120px; --radius:16px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; line-height:1.65; color:var(--ink);
+    font-family:Inter, system-ui, -apple-system, Segoe UI, Arial, Helvetica, sans-serif;
+    background:
+      radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.35) 25%, transparent 26%) 0 0/110px 110px,
+      radial-gradient(1px 1px at 75% 65%, rgba(255,255,255,.25) 25%, transparent 26%) 0 0/90px 90px,
+      linear-gradient(180deg, #0b1d39 0%, var(--bg) 60%);
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px}
+  .header{position:sticky; top:0; z-index:30; background:rgba(10,22,44,.76); backdrop-filter:blur(8px); border-bottom:1px solid var(--stroke)}
+  .row{display:flex; align-items:center; justify-content:space-between; gap:22px; flex-wrap:wrap; padding:18px 0}
+  .brand{display:flex; align-items:center; gap:14px}
+  .brand img{width:60px; height:60px; object-fit:contain; border-radius:50%; border:2px solid var(--stroke)}
+  .brand h1{margin:0; font-family:Bungee,Inter; letter-spacing:.6px; font-size:24px; white-space:nowrap} /* one line */
+  .brand small{display:block; color:var(--muted); letter-spacing:.6px}
+  .stud-strip{height:20px; border-top:1px solid var(--stroke); border-bottom:1px solid var(--stroke);
+    background:
+      radial-gradient(circle at 14px 10px, rgba(255,255,255,.2) 32%, rgba(0,0,0,.3) 33%, transparent 34%) 0 0/52px 20px,
+      radial-gradient(circle at 38px 10px, rgba(255,255,255,.2) 32%, rgba(0,0,0,.3) 33%, transparent 34%) 0 0/52px 20px,
+      linear-gradient(90deg, var(--lego-red) 0 25%, var(--lego-yellow) 25% 50%, var(--lego-blue) 50% 75%, var(--lego-green) 75% 100%);
+    opacity:.55;
+  }
+  .hero{padding:54px 0 22px} /* more spacious */
+  .h-head{margin:0; font-size:40px; letter-spacing:.6px; white-space:nowrap} /* keep on one line */
+  .h-sub{margin:12px 0 0; color:var(--muted); max-width:980px}
+  .persona{padding:18px 0 8px}
+  .grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px} /* bigger gap */
+  @media (max-width:980px){ .grid{grid-template-columns:1fr} .h-head{white-space:normal} } /* allow wrap on small screens */
+  .card{background:var(--plate); border:1px solid var(--stroke); border-radius:var(--radius); overflow:hidden}
+  .stud-top{height:38px; border-bottom:1px solid var(--stroke);
+    background:
+      radial-gradient(circle at 22px 18px, rgba(255,255,255,.25) 32%, rgba(0,0,0,.3) 33%, transparent 34%) 0 0/64px 38px,
+      radial-gradient(circle at 54px 18px, rgba(255,255,255,.25) 32%, rgba(0,0,0,.3) 33%, transparent 34%) 0 0/64px 38px;
+  }
+  .stud-top.red{background-color:#b6171d}
+  .stud-top.yellow{background-color:#d9a50a}
+  .stud-top.blue{background-color:#0f56b3}
+  .stud-top.green{background-color:#1f8c43}
+  .card-body{padding:22px} /* more padding */
+  .card h3{margin:.25rem 0 .5rem; font-size:20px; letter-spacing:.3px}
+  .card p{margin:0; color:var(--muted)}
+  .list{margin:12px 0 14px; padding-left:20px}
+  .list li{margin:8px 0}
+  .cta{display:inline-flex; align-items:center; gap:8px; margin-top:10px; background:var(--lego-yellow); color:#1b1200; font-weight:800;
+       border:none; border-radius:12px; padding:12px 16px; text-decoration:none}
+  .cta:hover{filter:brightness(1.06)}
+  .features{padding:10px 0 40px} /* more bottom space */
+  .features h4{margin:0 0 12px; color:var(--muted); font-size:18px}
+  .bullets{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px}
+  .bullet{background:#0d2548; border:1px solid var(--stroke); border-radius:12px; padding:14px}
+  .bullet strong{display:block; margin-bottom:6px}
+  @media (max-width:980px){ .bullets{grid-template-columns:1fr 1fr} }
+  @media (max-width:640px){ .bullets{grid-template-columns:1fr} }
+  .footer{border-top:1px solid var(--stroke); color:var(--muted); text-align:center; padding:28px 0 40px}
+</style>
+</head>
+<body>
+  <header class="header">
+    <div class="wrap">
+      <div class="row">
+        <div class="brand">
+          <img src="assets/lego-logo.png" alt="Brickonaut badge" />
+          <div>
+            <h1>Brickonaut</h1>
+            <small>UIC Chicago · NASA Space Apps · Space Bioscience Explorer</small>
+          </div>
+        </div>
+        <nav class="nav" style="display:flex; gap:12px; flex-wrap:wrap">
+          <a class="cta" style="background:var(--lego-blue); color:white" href="scientist.html">Scientist</a>
+          <a class="cta" style="background:var(--lego-green); color:white" href="manager.html">Manager</a>
+          <a class="cta" style="background:var(--lego-red); color:white" href="architect.html">Architect</a>
+          <a class="cta" style="background:var(--lego-yellow)" href="index.html">Home</a>
+        </nav>
+      </div>
+    </div>
+    <div class="stud-strip"></div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h2 class="h-head">Brickonaut — piece‑by‑piece insights for space bioscience</h2>
+      <p class="h-sub">A calm, readable dashboard serving scientists, managers, and mission architects. AI extracts facts, computes consensus, enables semantic search, and reveals gaps — all without a chatbot UI.</p>
+    </section>
+    
+<section class="persona" id="personas">
+  <div class="grid">
+    <article class="card" id="scientist">
+      <div class="stud-top blue"></div>
+      <div class="card-body">
+        <h3>Scientist / Researcher</h3>
+        <p>Generate hypotheses and compare results across platforms and missions.</p>
+        <ul class="list">
+          <li>Semantic search over 600+ papers</li>
+          <li>Evidence cards with section-level citations</li>
+          <li>Nearest-neighbor “study neighborhoods”</li>
+        </ul>
+        <a class="cta" href="scientist.html">Open Scientist Dashboard</a>
+      </div>
+    </article>
+    <article class="card" id="manager">
+      <div class="stud-top yellow"></div>
+      <div class="card-body">
+        <h3>Investment Manager</h3>
+        <p>Spot progress, consensus, and where funding can close gaps.</p>
+        <ul class="list">
+          <li>Consensus meter by topic/organism</li>
+          <li>Impact trends by year & platform</li>
+          <li>Gap map with proposed next studies</li>
+        </ul>
+        <a class="cta" href="manager.html">Open Manager Dashboard</a>
+      </div>
+    </article>
+    <article class="card" id="architect">
+      <div class="stud-top red"></div>
+      <div class="card-body">
+        <h3>Mission Architect</h3>
+        <p>Plan safer Moon/Mars missions using distilled evidence.</p>
+        <ul class="list">
+          <li>Condition → Endpoint summaries</li>
+          <li>Filters: duration, platform, organism</li>
+          <li>Downloadable facts with provenance</li>
+        </ul>
+        <a class="cta" href="architect.html">Open Mission Dashboard</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="features">
+  <h4>How we use AI (no chatbot)</h4>
+  <div class="bullets">
+    <div class="bullet"><strong>Semantic Search</strong> Embeddings over titles, abstracts, and extracted facts.</div>
+    <div class="bullet"><strong>Evidence Cards</strong> Section-aware summaries with sentence-level citations.</div>
+    <div class="bullet"><strong>Consensus Meter</strong> Agreement/disagreement across studies for each (organism, condition, endpoint) triple.</div>
+    <div class="bullet"><strong>Gap Map</strong> Coverage matrix to reveal under-studied combinations and propose next studies.</div>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap"><small>© 2025 Brickonaut · Le’Go Team · UIC Chicago · NASA Space Apps</small></div>
+  </footer>
+</body>
+</html>
