@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NASA Space Apps Dashboard</title>
+    <title>NASA Space Bioscience Explorer</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,6 @@
             min-height: 100vh;
         }
 
-        /* Header */
         .header {
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
@@ -113,10 +112,9 @@
             color: #ffffff;
         }
 
-        /* Hero Section */
         .hero {
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px 40px;
             background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%);
         }
 
@@ -134,108 +132,196 @@
         .hero p {
             font-size: 18px;
             color: #cbd5e0;
-            max-width: 600px;
-            margin: 0 auto 30px;
+            max-width: 700px;
+            margin: 0 auto 20px;
             line-height: 1.6;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: #FC3D21;
-            color: white;
-            padding: 15px 40px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-            transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(252, 61, 33, 0.4);
+        .hero .subtitle {
+            font-size: 14px;
+            color: #a0aec0;
+            margin-bottom: 10px;
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(252, 61, 33, 0.6);
-        }
-
-        /* Dashboard Area */
-        .dashboard-area {
+        .selection-area {
             max-width: 1400px;
             margin: 40px auto;
             padding: 0 40px;
         }
 
         .section-title {
-            font-size: 32px;
-            margin-bottom: 30px;
+            font-size: 36px;
+            margin-bottom: 20px;
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 3px;
             color: #ffffff;
         }
 
-        .dashboard-grid {
+        .section-subtitle {
+            font-size: 16px;
+            color: #cbd5e0;
+            text-align: center;
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .persona-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
             margin-bottom: 50px;
         }
 
-        .dashboard-card {
+        .persona-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 30px;
-            transition: all 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
         }
 
-        .dashboard-card:hover {
-            transform: translateY(-5px);
+        .persona-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #FC3D21, #ff6b4a);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .persona-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .persona-card:hover {
+            transform: translateY(-10px);
             border-color: #FC3D21;
-            box-shadow: 0 10px 30px rgba(252, 61, 33, 0.3);
+            box-shadow: 0 20px 50px rgba(252, 61, 33, 0.4);
+            background: rgba(252, 61, 33, 0.1);
         }
 
-        .card-icon {
-            font-size: 48px;
+        .persona-icon {
+            font-size: 72px;
+            margin-bottom: 25px;
+            display: block;
+            text-align: center;
+        }
+
+        .persona-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .persona-description {
+            color: #cbd5e0;
+            line-height: 1.7;
+            font-size: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .persona-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .persona-features li {
+            color: #a0aec0;
+            font-size: 14px;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .persona-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #FC3D21;
+            font-weight: bold;
+        }
+
+        .persona-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #FC3D21, #ff4520);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .persona-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(252, 61, 33, 0.5);
+        }
+
+        .info-section {
+            max-width: 1200px;
+            margin: 80px auto 40px;
+            padding: 0 40px;
+            text-align: center;
+        }
+
+        .info-section h3 {
+            font-size: 28px;
             margin-bottom: 20px;
-        }
-
-        .card-title {
-            font-size: 24px;
-            margin-bottom: 10px;
             color: #ffffff;
         }
 
-        .card-description {
+        .info-section p {
             color: #cbd5e0;
-            line-height: 1.6;
-            font-size: 14px;
-        }
-
-        /* Content Placeholder */
-        .content-placeholder {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 2px dashed rgba(252, 61, 33, 0.5);
-            border-radius: 20px;
-            padding: 80px 40px;
-            text-align: center;
-            margin: 40px auto;
-            max-width: 1200px;
-        }
-
-        .content-placeholder h3 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: #FC3D21;
-        }
-
-        .content-placeholder p {
-            color: #cbd5e0;
+            line-height: 1.8;
             font-size: 16px;
+            max-width: 800px;
+            margin: 0 auto 30px;
         }
 
-        /* Footer */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: bold;
+            color: #FC3D21;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #a0aec0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .footer {
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
@@ -258,7 +344,6 @@
             color: #a0aec0;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -270,76 +355,140 @@
                 font-size: 32px;
             }
 
-            .dashboard-grid {
+            .persona-grid {
                 grid-template-columns: 1fr;
             }
 
             .logo-text h1 {
                 font-size: 22px;
             }
+
+            .stats-bar {
+                gap: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="nasa-logo-section">
             <div class="nasa-logo"></div>
             <div class="logo-text">
                 <h1>NASA</h1>
-                <p>NATIONAL AERONAUTICS AND SPACE ADMINISTRATION</p>
+                <p>BIOLOGICAL & PHYSICAL SCIENCES</p>
             </div>
         </div>
         <nav>
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Missions</a>
-            <a href="#">Data</a>
+            <a href="#" class="active">Home</a>
             <a href="#">About</a>
+            <a href="#">Resources</a>
+            <a href="#">Contact</a>
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
-        <h2>Mission Control Dashboard</h2>
-        <p>Real-time monitoring and analytics for space exploration missions. Track satellites, analyze data, and explore the cosmos.</p>
-        <a href="#dashboard" class="cta-button">Launch Dashboard</a>
+        <p class="subtitle">Space Bioscience Research Explorer</p>
+        <h2>Who Are You?</h2>
+        <p>Access NASA's comprehensive bioscience research database tailored to your needs. Choose your role below to explore mission-critical insights powered by AI.</p>
     </section>
 
-    <!-- Dashboard Area -->
-    <section class="dashboard-area" id="dashboard">
-        <h3 class="section-title">Quick Stats</h3>
+    <section class="selection-area">
+        <h3 class="section-title">Select Your Dashboard</h3>
+        <p class="section-subtitle">Each dashboard is customized to provide relevant insights and tools for your specific research or mission needs.</p>
         
-        <div class="dashboard-grid">
-            <div class="dashboard-card">
-                <div class="card-icon">🚀</div>
-                <h4 class="card-title">Active Missions</h4>
-                <p class="card-description">Monitor ongoing space missions and track their progress in real-time.</p>
+        <div class="persona-grid">
+            <div class="persona-card" onclick="navigateToDashboard('scientist')">
+                <span class="persona-icon">🔬</span>
+                <h4 class="persona-title">Scientist / Researcher</h4>
+                <p class="persona-description">Discover breakthrough research, identify knowledge gaps, and generate new hypotheses from 608+ NASA bioscience publications.</p>
+                <ul class="persona-features">
+                    <li>AI-powered research discovery</li>
+                    <li>Knowledge graph visualization</li>
+                    <li>Smart publication search</li>
+                    <li>Research gap analysis</li>
+                    <li>Citation network explorer</li>
+                </ul>
+                <button class="persona-button">Launch Research Dashboard</button>
             </div>
 
-            <div class="dashboard-card">
-                <div class="card-icon">🛰️</div>
-                <h4 class="card-title">Satellites</h4>
-                <p class="card-description">Track satellite positions, telemetry data, and operational status.</p>
+            <div class="persona-card" onclick="navigateToDashboard('manager')">
+                <span class="persona-icon">💼</span>
+                <h4 class="persona-title">Investment Manager</h4>
+                <p class="persona-description">Identify high-impact funding opportunities and track research ROI across NASA's bioscience portfolio.</p>
+                <ul class="persona-features">
+                    <li>Funding opportunity analyzer</li>
+                    <li>Research impact metrics</li>
+                    <li>Grant success patterns</li>
+                    <li>Budget allocation insights</li>
+                    <li>Portfolio performance tracking</li>
+                </ul>
+                <button class="persona-button">Launch Investment Dashboard</button>
             </div>
 
-            <div class="dashboard-card">
-                <div class="card-icon">📊</div>
-                <h4 class="card-title">Data Analytics</h4>
-                <p class="card-description">Analyze mission data, generate reports, and visualize trends.</p>
+            <div class="persona-card" onclick="navigateToDashboard('architect')">
+                <span class="persona-icon">🚀</span>
+                <h4 class="persona-title">Mission Architect</h4>
+                <p class="persona-description">Access actionable insights for planning safe and efficient lunar and Martian exploration missions.</p>
+                <ul class="persona-features">
+                    <li>Mission-critical findings</li>
+                    <li>Biological risk assessment</li>
+                    <li>Environmental constraints</li>
+                    <li>Life support data analysis</li>
+                    <li>Mission planning insights</li>
+                </ul>
+                <button class="persona-button">Launch Mission Dashboard</button>
             </div>
-        </div>
-
-        <!-- Content Placeholder -->
-        <div class="content-placeholder">
-            <h3>🌟 Build Your Dashboard Here</h3>
-            <p>This is your workspace. Add charts, graphs, mission details, and interactive components to create your custom NASA dashboard.</p>
         </div>
     </section>
 
-    <!-- Footer -->
+    <section class="info-section">
+        <h3>Powered by Advanced AI & Data Science</h3>
+        <p>Our platform leverages artificial intelligence, knowledge graphs, and natural language processing to analyze decades of NASA bioscience research. Explore over 600 publications spanning experiments on the International Space Station, shuttle missions, and ground-based analog studies.</p>
+        
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number">608+</span>
+                <span class="stat-label">Publications</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">40+</span>
+                <span class="stat-label">Years of Research</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">AI</span>
+                <span class="stat-label">Powered Insights</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Access</span>
+            </div>
+        </div>
+    </section>
+
     <footer class="footer">
         <div class="footer-logo">NATIONAL AERONAUTICS AND SPACE ADMINISTRATION</div>
-        <div class="footer-text">Space Apps Challenge 2024 | Mission Control Dashboard v1.0</div>
+        <div class="footer-text">Space Apps Challenge 2024 | Bioscience Explorer v1.0</div>
     </footer>
+
+    <script>
+        function navigateToDashboard(type) {
+            // For now, just alert - you'll replace this with actual navigation
+            alert('Navigating to ' + type + ' dashboard...\n\nThis will link to: ' + type + '-dashboard.html');
+            
+            // Later, uncomment this to actually navigate:
+            // window.location.href = type + '-dashboard.html';
+        }
+
+        // Add hover effect animations
+        document.querySelectorAll('.persona-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
