@@ -28,7 +28,7 @@
   .row{display:flex; align-items:center; justify-content:space-between; gap:22px; flex-wrap:wrap; padding:18px 0}
   .brand{display:flex; align-items:center; gap:14px}
   .brand img{width:60px; height:60px; object-fit:contain; border-radius:50%; border:2px solid var(--stroke)}
-  .brand h1{margin:0; font-family:Bungee,Inter; letter-spacing:.6px; font-size:24px; white-space:nowrap} /* one line */
+  .brand h1{margin:0; font-family:Bungee,Inter; letter-spacing:.6px; font-size:24px; white-space:nowrap}
   .brand small{display:block; color:var(--muted); letter-spacing:.6px}
   .stud-strip{height:20px; border-top:1px solid var(--stroke); border-bottom:1px solid var(--stroke);
     background:
@@ -37,49 +37,51 @@
       linear-gradient(90deg, var(--lego-red) 0 25%, var(--lego-yellow) 25% 50%, var(--lego-blue) 50% 75%, var(--lego-green) 75% 100%);
     opacity:.55;
   }
-  .hero{padding:54px 0 22px} /* more spacious */
-  .h-head{margin:0; font-size:40px; letter-spacing:.6px; white-space:nowrap} /* keep on one line */
+  .hero{padding:54px 0 22px}
+  .h-head{margin:0; font-size:40px; letter-spacing:.6px; white-space:nowrap}
   .h-sub{margin:12px 0 0; color:var(--muted); max-width:980px}
-  .persona{padding:18px 0 8px}
-  .grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px} /* bigger gap */
-  @media (max-width:980px){ .grid{grid-template-columns:1fr} .h-head{white-space:normal} } /* allow wrap on small screens */
-  .card{background:var(--plate); border:1px solid var(--stroke); border-radius:var(--radius); overflow:hidden}
-  .stud-top{height:38px; border-bottom:1px solid var(--stroke);
-    background:
-      radial-gradient(circle at 22px 18px, rgba(255,255,255,.25) 32%, rgba(0,0,0,.3) 33%, transparent 34%) 0 0/64px 38px,
-      radial-gradient(circle at 54px 18px, rgba(255,255,255,.25) 32%, rgba(0,0,0,.3) 33%, transparent 34%) 0 0/64px 38px;
-  }
-  .stud-top.red{background-color:#b6171d}
-  .stud-top.yellow{background-color:#d9a50a}
-  .stud-top.blue{background-color:#0f56b3}
-  .stud-top.green{background-color:#1f8c43}
-  .card-body{padding:22px} /* more padding */
-  .card h3{margin:.25rem 0 .5rem; font-size:20px; letter-spacing:.3px}
-  .card p{margin:0; color:var(--muted)}
-  .list{margin:12px 0 14px; padding-left:20px}
-  .list li{margin:8px 0}
-  .cta{display:inline-flex; align-items:center; gap:8px; margin-top:10px; background:var(--lego-yellow); color:#1b1200; font-weight:800;
-       border:none; border-radius:12px; padding:12px 16px; text-decoration:none}
+  .filters{padding:24px 0; display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:16px}
+  .filter-group{background:var(--plate); border:1px solid var(--stroke); border-radius:12px; padding:18px}
+  .filter-group label{display:block; font-weight:600; margin-bottom:8px; font-size:14px}
+  .filter-group select, .filter-group input{width:100%; padding:10px; border-radius:8px; border:1px solid var(--stroke); 
+    background:#0d2548; color:var(--ink); font-family:inherit}
+  .search-box{background:var(--plate); border:1px solid var(--stroke); border-radius:12px; padding:18px; margin-bottom:24px}
+  .search-box input{width:100%; padding:14px; border-radius:8px; border:1px solid var(--stroke); 
+    background:#0d2548; color:var(--ink); font-size:16px; font-family:inherit}
+  .results-section{padding:20px 0 40px}
+  .result-card{background:var(--plate); border:1px solid var(--stroke); border-radius:var(--radius); 
+    padding:24px; margin-bottom:20px; transition:transform 0.2s}
+  .result-card:hover{transform:translateY(-2px); border-color:var(--lego-blue)}
+  .result-card h3{margin:0 0 12px; color:var(--lego-yellow); font-size:20px}
+  .result-meta{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:12px; font-size:14px; color:var(--muted)}
+  .result-meta span{display:flex; align-items:center; gap:6px}
+  .badge{background:rgba(30,144,255,0.2); color:var(--lego-blue); padding:4px 12px; 
+    border-radius:6px; font-size:12px; font-weight:600}
+  .summary{color:var(--muted); line-height:1.7; margin-bottom:12px}
+  .keywords{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+  .keyword{background:#0d2548; border:1px solid var(--stroke); padding:4px 10px; 
+    border-radius:6px; font-size:12px; color:var(--ink)}
+  .stats-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:30px}
+  .stat-card{background:var(--plate); border:1px solid var(--stroke); border-radius:12px; padding:20px; text-align:center}
+  .stat-number{font-size:32px; font-weight:800; color:var(--lego-yellow); display:block}
+  .stat-label{color:var(--muted); font-size:14px; margin-top:4px}
+  .cta{display:inline-flex; align-items:center; gap:8px; margin-top:10px; background:var(--lego-yellow); 
+    color:#1b1200; font-weight:800; border:none; border-radius:12px; padding:12px 16px; 
+    text-decoration:none; cursor:pointer; transition:filter 0.2s}
   .cta:hover{filter:brightness(1.06)}
-  .features{padding:10px 0 40px} /* more bottom space */
-  .features h4{margin:0 0 12px; color:var(--muted); font-size:18px}
-  .bullets{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px}
-  .bullet{background:#0d2548; border:1px solid var(--stroke); border-radius:12px; padding:14px}
-  .bullet strong{display:block; margin-bottom:6px}
-  @media (max-width:980px){ .bullets{grid-template-columns:1fr 1fr} }
-  @media (max-width:640px){ .bullets{grid-template-columns:1fr} }
   .footer{border-top:1px solid var(--stroke); color:var(--muted); text-align:center; padding:28px 0 40px}
-</style>
+  @media (max-width:980px){ .h-head{white-space:normal; font-size:32px} }
+  </style>
 </head>
 <body>
   <header class="header">
     <div class="wrap">
       <div class="row">
         <div class="brand">
-          <img src="assets/lego-logo.png" alt="Brickonaut badge" />
+          <img src="assets/lego-logo.png" alt="Brickonaut badge" />          
           <div>
             <h1>Brickonaut</h1>
-            <small>UIC Chicago · NASA Space Apps · Space Bioscience Explorer</small>
+            <small>UIC Chicago · NASA Space Apps · Mission Architect Dashboard</small>
           </div>
         </div>
         <nav class="nav" style="display:flex; gap:12px; flex-wrap:wrap">
@@ -96,42 +98,201 @@
   <main class="wrap">
     <section class="hero">
       <h2 class="h-head">Mission Architect Dashboard</h2>
-      <p class="h-sub">Distilled condition → endpoint evidence and filters for mission planning.</p>
+      <p class="h-sub">Explore 608 NASA bioscience publications with intelligent filtering and AI-powered insights for mission planning</p>
     </section>
-    
-  
-  <section class="persona" id="arx">
-    <div class="grid" style="grid-template-columns:1fr 1fr">
-      <article class="card">
-        <div class="stud-top red"></div>
-        <div class="card-body">
-          <h3>Condition → Endpoint Summaries</h3>
-          <p>Pull concise syntheses with provenance. Endpoint: /api/summaries?o=&c=&e=</p>
-          <ul class="list">
-            <li>Export PDFs/CSV for briefs</li>
-            <li>Surface assumptions & limits</li>
-          </ul>
-          <a class="cta" href="index.html">Back Home</a>
-        </div>
-      </article>
-      <article class="card">
-        <div class="stud-top green"></div>
-        <div class="card-body">
-          <h3>Filters & Downloads</h3>
-          <p>Duration, platform, organism filters with downloadable fact tables and BibTeX.</p>
-          <ul class="list">
-            <li>Direct links to OSDR/PMC</li>
-            <li>Mission duration presets</li>
-          </ul>
-          <a class="cta" href="index.html">Back Home</a>
-        </div>
-      </article>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-number" id="totalPubs">608</span>
+        <div class="stat-label">Total Publications</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="filteredPubs">0</span>
+        <div class="stat-label">Filtered Results</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="avgYear">2020</span>
+        <div class="stat-label">Average Year</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="topOrganism">Human</span>
+        <div class="stat-label">Top Organism</div>
+      </div>
     </div>
-  </section>
-</main>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="🔍 Search by keywords, conditions, organisms, or endpoints...">
+    </div>
+
+    <div class="filters">
+      <div class="filter-group">
+        <label>📅 Publication Year</label>
+        <select id="yearFilter">
+          <option value="">All Years</option>
+          <option value="2024-2020">2020-2024</option>
+          <option value="2019-2015">2015-2019</option>
+          <option value="2014-2010">2010-2014</option>
+          <option value="2009-2000">2000-2009</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>🧬 Organism Type</label>
+        <select id="organismFilter">
+          <option value="">All Organisms</option>
+          <option value="human">Human</option>
+          <option value="mouse">Mouse</option>
+          <option value="rat">Rat</option>
+          <option value="cell">Cell Culture</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>⏱️ Mission Duration</label>
+        <select id="durationFilter">
+          <option value="">All Durations</option>
+          <option value="short">Short-term (&lt;30 days)</option>
+          <option value="medium">Medium-term (30-180 days)</option>
+          <option value="long">Long-term (&gt;180 days)</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label>🎯 Research Focus</label>
+        <select id="focusFilter">
+          <option value="">All Focus Areas</option>
+          <option value="cartilage">Cartilage/Bone</option>
+          <option value="cardiovascular">Cardiovascular</option>
+          <option value="muscle">Muscle</option>
+          <option value="immune">Immune System</option>
+        </select>
+      </div>
+    </div>
+
+    <section class="results-section">
+      <h3 style="color:var(--lego-yellow); margin-bottom:20px">📊 Research Results</h3>
+      <div id="resultsContainer">
+        <!-- Results populated by JS -->
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
-    <div class="wrap"><small>© 2025 Brickonaut · Le’Go Team · UIC Chicago · NASA Space Apps</small></div>
+    <div class="wrap"><small>© 2025 Brickonaut · Le'Go Team · UIC Chicago · NASA Space Apps Challenge</small></div>
   </footer>
+
+  <script>
+    // Sample data structure based on the provided JSON
+    const samplePublication = {
+      id: "2824534",
+      title: "In vitro generation of mechanically functional cartilage grafts based on adult human stem cells and 3D-woven poly(ε-caprolactone) scaffolds",
+      year: "2011",
+      journal: "Biomaterials",
+      keywords: ["Cartilage repair", "stem cell", "bioreactor", "biomechanics", "growth factors"],
+      abstract: "Three-dimensionally woven poly(ε-caprolactone)(PCL) scaffolds were combined with adult human mesenchymal stem cells (hMSC) to engineer mechanically functional cartilage constructs in vitro...",
+      organism: "human",
+      duration: "short",
+      focus: "cartilage"
+    };
+
+    // Generate mock data for demonstration
+    function generateMockData() {
+      const years = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015];
+      const organisms = ['human', 'mouse', 'rat', 'cell'];
+      const durations = ['short', 'medium', 'long'];
+      const focuses = ['cartilage', 'cardiovascular', 'muscle', 'immune'];
+      const titles = [
+        'Effects of microgravity on bone density in astronauts',
+        'Cardiovascular adaptations during long-duration spaceflight',
+        'Muscle atrophy countermeasures in simulated Mars missions',
+        'Immune system response to space radiation exposure',
+        'Cartilage tissue engineering for space medicine applications',
+        'Neural plasticity changes in isolated environments',
+        'Sleep patterns and circadian rhythm disruption in space',
+        'Wound healing mechanisms under reduced gravity conditions'
+      ];
+
+      const data = [];
+      for (let i = 0; i < 50; i++) {
+        data.push({
+          id: `pub_${i}`,
+          title: titles[i % titles.length] + ` - Study ${i + 1}`,
+          year: years[Math.floor(Math.random() * years.length)],
+          journal: ['Biomaterials', 'Space Medicine', 'J Biomech Eng', 'Tissue Eng'][Math.floor(Math.random() * 4)],
+          keywords: ['microgravity', 'tissue engineering', 'biomechanics', 'stem cells'].slice(0, Math.floor(Math.random() * 3) + 2),
+          organism: organisms[Math.floor(Math.random() * organisms.length)],
+          duration: durations[Math.floor(Math.random() * durations.length)],
+          focus: focuses[Math.floor(Math.random() * focuses.length)],
+          abstract: `This study investigates important aspects of space bioscience with potential applications for mission planning and astronaut health.`
+        });
+      }
+      return data;
+    }
+
+    let allPublications = generateMockData();
+    let filteredPublications = [...allPublications];
+
+    function applyFilters() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const yearFilter = document.getElementById('yearFilter').value;
+      const organismFilter = document.getElementById('organismFilter').value;
+      const durationFilter = document.getElementById('durationFilter').value;
+      const focusFilter = document.getElementById('focusFilter').value;
+
+      filteredPublications = allPublications.filter(pub => {
+        const matchesSearch = !searchTerm || 
+          pub.title.toLowerCase().includes(searchTerm) ||
+          pub.keywords.some(k => k.toLowerCase().includes(searchTerm)) ||
+          pub.abstract.toLowerCase().includes(searchTerm);
+
+        const matchesYear = !yearFilter || (() => {
+          const [max, min] = yearFilter.split('-').map(Number);
+          return pub.year >= min && pub.year <= max;
+        })();
+
+        const matchesOrganism = !organismFilter || pub.organism === organismFilter;
+        const matchesDuration = !durationFilter || pub.duration === durationFilter;
+        const matchesFocus = !focusFilter || pub.focus === focusFilter;
+
+        return matchesSearch && matchesYear && matchesOrganism && matchesDuration && matchesFocus;
+      });
+
+      updateUI();
+    }
+
+    function updateUI() {
+      document.getElementById('filteredPubs').textContent = filteredPublications.length;
+      
+      const resultsContainer = document.getElementById('resultsContainer');
+      resultsContainer.innerHTML = filteredPublications.slice(0, 10).map(pub => `
+        <div class="result-card">
+          <h3>${pub.title}</h3>
+          <div class="result-meta">
+            <span>📅 ${pub.year}</span>
+            <span>📚 ${pub.journal}</span>
+            <span class="badge">${pub.organism.toUpperCase()}</span>
+          </div>
+          <p class="summary">${pub.abstract}</p>
+          <div class="keywords">
+            ${pub.keywords.map(k => `<span class="keyword">${k}</span>`).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      if (filteredPublications.length === 0) {
+        resultsContainer.innerHTML = '<p style="color:var(--muted); text-align:center; padding:40px">No publications match your criteria. Try adjusting the filters.</p>';
+      }
+    }
+
+    // Event listeners
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+    document.getElementById('yearFilter').addEventListener('change', applyFilters);
+    document.getElementById('organismFilter').addEventListener('change', applyFilters);
+    document.getElementById('durationFilter').addEventListener('change', applyFilters);
+    document.getElementById('focusFilter').addEventListener('change', applyFilters);
+
+    // Initialize
+    updateUI();
+  </script>
 </body>
 </html>
