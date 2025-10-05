@@ -75,6 +75,9 @@
   .list li{margin:8px 0; color:var(--muted)}
   .card .cta{margin-top:auto; align-self:flex-start}
   
+  /* Button group for cards with multiple actions */
+  .button-group{display:flex; flex-direction:column; gap:10px; margin-top:auto}
+  
   /* Features section */
   .features{padding:40px 0 60px}
   .features h4{margin:0 0 24px; color:var(--ink); font-size:24px; text-align:center; letter-spacing:.4px}
@@ -155,7 +158,10 @@
               <li>Impact trends by year & platform</li>
               <li>Gap map with proposed next studies</li>
             </ul>
-            <a class="cta" style="background:var(--lego-yellow); color:#1b1200" href="manager.html">Open Manager Dashboard</a>
+            <div class="button-group">
+              <a class="cta" style="background:var(--lego-yellow); color:#1b1200" href="manager.html">Open Manager Dashboard</a>
+              <a class="cta" style="background:var(--lego-green); color:white" href="Trends.html">Open Data Analytics</a>
+            </div>
           </div>
         </article>
         
