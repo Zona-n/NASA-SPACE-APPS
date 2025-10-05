@@ -7,7 +7,7 @@ from semantic_kernel.functions.kernel_arguments import KernelArguments
 # Populate values from your OpenAI deployment
 model_id = "gpt-4o"
 endpoint = "https://azin2-nasa-space-apps-resource.openai.azure.com/"
-api_key = os.getenv("AZURE_API_KEY")
+# api_key = "6PVtkmaEivekvLcGjpIw9yuPBtDnmGfDYuh4SKoG1xTvPyjDucfwJQQJ99BJACHYHv6XJ3w3AAAAACOGF5NT"
 
 # Create a kernel and add Azure OpenAI chat completion
 kernel = Kernel()

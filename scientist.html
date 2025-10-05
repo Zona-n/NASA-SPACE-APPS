@@ -176,27 +176,36 @@
   </footer>
 
   <script>
-    // Sample data - Replace with API calls
-    const samplePapers = [
-      { id: 'PMC4136787', title: `Mice in Bion-M 1 space mission: training and selection`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4136787/' },
-      { id: 'PMC3630201', title: `Microgravity induces pelvic bone loss through osteoclastic activity, osteocytic osteolysis, and osteoblastic cell cycle inhibition by CDKN1a/p21`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3630201/' },
-      { id: 'PMC11988870', title: `Stem Cell Health and Tissue Regeneration in Microgravity`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11988870/' },
-      { id: 'PMC7998608', title: `Microgravity Reduces the Differentiation and Regenerative Potential of Embryonic Stem Cells`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7998608/' },
-      { id: 'PMC5587110', title: `Microgravity validation of a novel system for RNA isolation and multiplex quantitative real time PCR analysis of gene expression on the International Space Station`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5587110/' },
-      { id: 'PMC8396460', title: `Spaceflight Modulates the Expression of Key Oxidative Stress and Cell Cycle Related Genes in Heart`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8396460/' },
-      { id: 'PMC5666799', title: `Dose- and Ion-Dependent Effects in the Oxidative Stress Response to Space-Like Radiation Exposure in the Skeletal System`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5666799/' },
-      { id: 'PMC5460236', title: `From the bench to exploration medicine: NASA life sciences translational research for human exploration and habitation missions.`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5460236/' },
-      { id: 'PMC6222041', title: `High-precision method for cyclic loading of small-animal vertebrae to assess bone quality.`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6222041/' },
-      { id: 'PMC6813909', title: `Effects of ex vivo ionizing radiation on collagen structure and whole-bone mechanical properties of mouse vertebrae.`, year: '', authors: ``, abstract: ``, keywords: [], organism: '', platform: '', duration: '', citations: 0, link: 'https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6813909/' },
-      // ...repeat similarly for remaining 97 records up to record #100...
-    ];
-
-
-    let currentPapers = [...samplePapers];
+    let samplePapers = [];
+    let currentPapers = [];
     let activeFilter = 'all';
 
-    // Initialize
-    displayResults(currentPapers);
+    // Load data from JSON file
+    fetch('papers_data.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to load papers_data.json');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Loaded papers:', data.length);
+        samplePapers = data;
+        currentPapers = [...samplePapers];
+        displayResults(currentPapers);
+      })
+      .catch(error => {
+        console.error('Error loading papers:', error);
+        // Show error to user
+        document.getElementById('emptyState').style.display = 'block';
+        document.getElementById('emptyState').innerHTML = `
+          <h3>Error loading data</h3>
+          <p>${error.message}</p>
+          <p>Make sure papers_data.json is in the same folder as scientist.html</p>
+        `;
+      });
+
+    // let activeFilter = 'all';
 
     function handleSearchKeypress(event) {
       if (event.key === 'Enter') {
