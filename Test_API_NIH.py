@@ -16,7 +16,7 @@ def extract_pmc_id(url):
     Example URL: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11353732/
     """
     try:
-        parts = url.rstrip("/").split("/")  # remove trailing slash and split
+        parts = url.strip("/").split("/")  # remove trailing slash and split
         for part in reversed(parts):
             if part.startswith("PMC"):
                 return part
