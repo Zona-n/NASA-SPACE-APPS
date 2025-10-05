@@ -13,9 +13,9 @@
     --max:1120px; --radius:16px;
   }
   *{box-sizing:border-box}
-  html,body{height:100%}
+  html,body{height:100%; margin:0}
   body{
-    margin:0; line-height:1.65; color:var(--ink);
+    line-height:1.65; color:var(--ink);
     font-family:Inter, system-ui, -apple-system, Segoe UI, Arial, Helvetica, sans-serif;
     background:
       radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.35) 25%, transparent 26%) 0 0/110px 110px,
@@ -28,7 +28,7 @@
   .row{display:flex; align-items:center; justify-content:space-between; gap:22px; flex-wrap:wrap; padding:18px 0}
   .brand{display:flex; align-items:center; gap:14px}
   .brand img{width:60px; height:60px; object-fit:contain; border-radius:50%; border:2px solid var(--stroke)}
-  .brand h1{margin:0; font-family:Bungee,Inter; letter-spacing:.6px; font-size:24px; white-space:nowrap} /* one line */
+  .brand h1{margin:0; font-family:Bungee,Inter; letter-spacing:.6px; font-size:24px; white-space:nowrap}
   .brand small{display:block; color:var(--muted); letter-spacing:.6px}
   .stud-strip{height:20px; border-top:1px solid var(--stroke); border-bottom:1px solid var(--stroke);
     background:
@@ -37,38 +37,47 @@
       linear-gradient(90deg, var(--lego-red) 0 25%, var(--lego-yellow) 25% 50%, var(--lego-blue) 50% 75%, var(--lego-green) 75% 100%);
     opacity:.55;
   }
-  .hero{padding:54px 0 22px} /* more spacious */
-  .h-head{margin:0; font-size:40px; letter-spacing:.6px; white-space:nowrap} /* keep on one line */
-  .h-sub{margin:12px 0 0; color:var(--muted); max-width:980px}
-  .persona{padding:18px 0 8px}
-  .grid{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:24px} /* bigger gap */
-  @media (max-width:980px){ .grid{grid-template-columns:1fr} .h-head{white-space:normal} } /* allow wrap on small screens */
-  .card{background:var(--plate); border:1px solid var(--stroke); border-radius:var(--radius); overflow:hidden}
-  .stud-top{height:38px; border-bottom:1px solid var(--stroke);
-    background:
-      radial-gradient(circle at 22px 18px, rgba(255,255,255,.25) 32%, rgba(0,0,0,.3) 33%, transparent 34%) 0 0/64px 38px,
-      radial-gradient(circle at 54px 18px, rgba(255,255,255,.25) 32%, rgba(0,0,0,.3) 33%, transparent 34%) 0 0/64px 38px;
-  }
-  .stud-top.red{background-color:#b6171d}
-  .stud-top.yellow{background-color:#d9a50a}
-  .stud-top.blue{background-color:#0f56b3}
-  .stud-top.green{background-color:#1f8c43}
-  .card-body{padding:22px} /* more padding */
-  .card h3{margin:.25rem 0 .5rem; font-size:20px; letter-spacing:.3px}
-  .card p{margin:0; color:var(--muted)}
-  .list{margin:12px 0 14px; padding-left:20px}
-  .list li{margin:8px 0}
-  .cta{display:inline-flex; align-items:center; gap:8px; margin-top:10px; background:var(--lego-yellow); color:#1b1200; font-weight:800;
-       border:none; border-radius:12px; padding:12px 16px; text-decoration:none}
+  .nav{display:flex; gap:12px; flex-wrap:wrap}
+  .cta{display:inline-flex; align-items:center; gap:8px; background:var(--lego-yellow); color:#1b1200; font-weight:800;
+       border:none; border-radius:12px; padding:10px 16px; text-decoration:none; font-size:14px; cursor:pointer}
   .cta:hover{filter:brightness(1.06)}
-  .features{padding:10px 0 40px} /* more bottom space */
-  .features h4{margin:0 0 12px; color:var(--muted); font-size:18px}
-  .bullets{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:16px}
-  .bullet{background:#0d2548; border:1px solid var(--stroke); border-radius:12px; padding:14px}
-  .bullet strong{display:block; margin-bottom:6px}
-  @media (max-width:980px){ .bullets{grid-template-columns:1fr 1fr} }
-  @media (max-width:640px){ .bullets{grid-template-columns:1fr} }
-  .footer{border-top:1px solid var(--stroke); color:var(--muted); text-align:center; padding:28px 0 40px}
+  
+  .hero{padding:40px 0 30px; text-align:center}
+  .h-head{margin:0 0 12px; font-size:36px; letter-spacing:.6px}
+  .h-sub{margin:0; color:var(--muted); max-width:800px; margin:0 auto}
+
+  .search-section{padding:30px 0}
+  .query-box{max-width:900px; margin:0 auto}
+  .query-input{width:100%; min-height:120px; padding:18px; font-size:16px; border-radius:16px;
+    border:2px solid var(--stroke); background:var(--plate); color:var(--ink);
+    font-family:inherit; resize:vertical}
+  .query-input::placeholder{color:var(--muted)}
+  .query-input:focus{outline:none; border-color:var(--lego-green)}
+  
+  .ask-btn{margin-top:12px; background:var(--lego-green); color:white; border:none; 
+    border-radius:10px; padding:12px 24px; font-weight:700; cursor:pointer; font-size:16px}
+  .ask-btn:hover{filter:brightness(1.1)}
+
+  .examples{margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+  .example-btn{padding:8px 14px; background:rgba(49,181,83,0.1); border:1px solid rgba(49,181,83,0.3);
+    border-radius:8px; color:var(--lego-green); cursor:pointer; font-size:13px}
+  .example-btn:hover{background:rgba(49,181,83,0.2)}
+
+  .loading{display:none; text-align:center; padding:40px; color:var(--muted)}
+  .loading.active{display:block}
+
+  .results{margin-top:30px; display:none}
+  .results.active{display:block}
+  .answer-box{background:var(--plate); border:1px solid var(--stroke); border-radius:16px; padding:24px}
+  .answer-title{margin:0 0 16px; color:var(--lego-green); font-size:20px; font-weight:700}
+  .answer-content{color:var(--muted); line-height:1.8; white-space:pre-wrap}
+
+  .footer{border-top:1px solid var(--stroke); color:var(--muted); text-align:center; padding:28px 0 40px; margin-top:60px}
+
+  @media (max-width:768px){
+    .h-head{font-size:28px}
+    .examples{justify-content:flex-start}
+  }
 </style>
 </head>
 <body>
@@ -82,7 +91,7 @@
             <small>UIC Chicago · NASA Space Apps · Space Bioscience Explorer</small>
           </div>
         </div>
-        <nav class="nav" style="display:flex; gap:12px; flex-wrap:wrap">
+        <nav class="nav">
           <a class="cta" style="background:var(--lego-blue); color:white" href="scientist.html">Scientist</a>
           <a class="cta" style="background:var(--lego-green); color:white" href="manager.html">Manager</a>
           <a class="cta" style="background:var(--lego-red); color:white" href="architect.html">Architect</a>
@@ -96,42 +105,136 @@
   <main class="wrap">
     <section class="hero">
       <h2 class="h-head">Investment Manager Dashboard</h2>
-      <p class="h-sub">See consensus, long-term trends, and gap maps to guide funding prioritization.</p>
+      <p class="h-sub">AI-powered analysis of 608+ NASA bioscience publications to identify funding opportunities, research gaps, and consensus areas.</p>
     </section>
-    
-  
-  <section class="persona" id="mgx">
-    <div class="grid" style="grid-template-columns:1fr 1fr">
-      <article class="card">
-        <div class="stud-top yellow"></div>
-        <div class="card-body">
-          <h3>Consensus Meter</h3>
-          <p>Compute agreement across studies for a (organism, condition, endpoint) triple. Endpoint: /api/consensus?o=&c=&e=</p>
-          <ul class="list">
-            <li>List dissenting evidence</li>
-            <li>Confidence & coverage counts</li>
-          </ul>
-          <a class="cta" href="index.html">Back Home</a>
+
+    <section class="search-section">
+      <div class="query-box">
+        <textarea 
+          id="queryInput" 
+          class="query-input"
+          placeholder="Ask investment-focused questions about NASA bioscience research...&#10;&#10;Examples:&#10;• What research areas need more funding?&#10;• Show consensus on bone loss in microgravity&#10;• Identify gaps in cardiovascular research&#10;• Which studies have high impact but low follow-up?"
+        ></textarea>
+        
+        <button class="ask-btn" onclick="askAI()">Ask AI Assistant</button>
+
+        <div class="examples">
+          <button class="example-btn" onclick="fillExample(0)">Funding Opportunities</button>
+          <button class="example-btn" onclick="fillExample(1)">Research Gaps</button>
+          <button class="example-btn" onclick="fillExample(2)">Consensus Analysis</button>
+          <button class="example-btn" onclick="fillExample(3)">Impact Trends</button>
         </div>
-      </article>
-      <article class="card">
-        <div class="stud-top blue"></div>
-        <div class="card-body">
-          <h3>Trends & Gap Map</h3>
-          <p>Yearly counts and coverage matrices. Endpoints: /api/trends, /api/gaps</p>
-          <ul class="list">
-            <li>Breakdown by platform (ISS/ground/rad)</li>
-            <li>Highlight under-studied cells</li>
-          </ul>
-          <a class="cta" href="index.html">Back Home</a>
+      </div>
+
+      <div id="loading" class="loading">
+        <p>Analyzing 608 publications...</p>
+      </div>
+
+      <div id="results" class="results">
+        <div class="answer-box">
+          <h3 class="answer-title">AI Analysis Results</h3>
+          <div id="answer" class="answer-content"></div>
         </div>
-      </article>
-    </div>
-  </section>
-</main>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
-    <div class="wrap"><small>© 2025 Brickonaut · Le’Go Team · UIC Chicago · NASA Space Apps</small></div>
+    <div class="wrap"><small>© 2025 Brickonaut · Le'Go Team · UIC Chicago · NASA Space Apps</small></div>
   </footer>
+
+  <script>
+    const exampleQueries = [
+      "What research areas in NASA bioscience need more funding based on publication gaps and emerging trends?",
+      "Identify the biggest research gaps in space biology that represent high-value funding opportunities.",
+      "What is the scientific consensus on muscle atrophy in microgravity, and are there areas of disagreement that need more research?",
+      "Show me impact trends over the past 10 years. Which research areas have high citation impact but declining investment?"
+    ];
+
+    function fillExample(index) {
+      document.getElementById('queryInput').value = exampleQueries[index];
+    }
+
+    async function askAI() {
+      const query = document.getElementById('queryInput').value.trim();
+      
+      if (!query) {
+        alert('Please enter a question');
+        return;
+      }
+
+      const loadingEl = document.getElementById('loading');
+      const resultsEl = document.getElementById('results');
+      const answerEl = document.getElementById('answer');
+
+      // Show loading
+      loadingEl.classList.add('active');
+      resultsEl.classList.remove('active');
+
+      // Debug info
+      console.log('Current URL:', window.location.href);
+      console.log('Attempting to fetch:', window.location.origin + '/api/search');
+
+      try {
+        const apiUrl = '/api/search';
+        console.log('Fetching:', apiUrl);
+        
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ query: query })
+        });
+
+        console.log('Response status:', response.status);
+        console.log('Response headers:', [...response.headers.entries()]);
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.error || `HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log('Success! Received data:', data);
+
+        // Show results
+        loadingEl.classList.remove('active');
+        resultsEl.classList.add('active');
+        answerEl.textContent = data.answer;
+
+      } catch (error) {
+        console.error('Fetch error:', error);
+        console.error('Error type:', error.name);
+        console.error('Error message:', error.message);
+        
+        loadingEl.classList.remove('active');
+        resultsEl.classList.add('active');
+        
+        let errorMsg = `Error: ${error.message}\n\n`;
+        
+        if (error.message.includes('Failed to fetch')) {
+          errorMsg += `Connection Error!\n\n`;
+          errorMsg += `Current page URL: ${window.location.href}\n`;
+          errorMsg += `Expected: http://localhost:5000/manager.html\n\n`;
+          errorMsg += `Troubleshooting:\n`;
+          errorMsg += `1. Make sure Flask is running: python api.py\n`;
+          errorMsg += `2. Access via: http://localhost:5000/manager.html\n`;
+          errorMsg += `3. DON'T open the HTML file directly (file://)\n`;
+          errorMsg += `4. Check Flask console for errors\n`;
+        }
+        
+        answerEl.textContent = errorMsg;
+      }
+    }
+
+    // Allow Enter+Shift to submit
+    document.getElementById('queryInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && e.shiftKey) {
+        e.preventDefault();
+        askAI();
+      }
+    });
+  </script>
 </body>
 </html>
