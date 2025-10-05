@@ -5,8 +5,8 @@ import json
 from urllib.parse import urlparse
 
 # configuration
-INPUT_CSV = "SB_publication_PMC.csv"   # your input CSV file
-OUTPUT_DIR = "assets/SB_publication_extracted_files"            # folder to save results
+INPUT_CSV = "publications.csv"   # your input CSV file
+OUTPUT_DIR = "data/SB_publication"            # folder to save results
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # extrack PMC ID from URL
